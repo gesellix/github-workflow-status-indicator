@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <title>GitHub Workflow Status Indicator</title>
 
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css"/>
     <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,15 +19,15 @@
 
 <div id="workflow-app">
 
-    <button id="close-btn" v-on:click="close"><i class="material-icons">close</i></button>
+    <!--    <button id="close-btn" v-on:click="close"><i class="material-icons">close</i></button>-->
 
     <!--    <div id="gh-link">-->
     <!--        Results powered by: <a v-bind:href="config.baseUri" target="_blank" class="open-in-browser">{{config.baseUri}}</a>-->
     <!--    </div>-->
 
-<!--    <div id="status-summary">-->
-<!--        status: {{ status }}-->
-<!--    </div>-->
+    <!--    <div id="status-summary">-->
+    <!--        status: {{ status }}-->
+    <!--    </div>-->
 
     <div id="technical-error">
         {{ error }}
@@ -33,7 +35,9 @@
 
     <div id="runs">
         <ul>
-            <li v-for="repo in repos"><i class="status" v-bind:class="repo.conclusion"></i> {{ repo.repo.slug }} / {{ repo.name }}</li>
+            <li v-for="repo in repos">
+                <div class="status-line"><i class="status" v-bind:class="repo.conclusion"></i> {{ repo.repo.slug }}: {{ repo.name }}</div>
+            </li>
         </ul>
     </div>
 </div>
