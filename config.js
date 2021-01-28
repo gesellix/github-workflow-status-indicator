@@ -18,12 +18,13 @@
       }
     }
   });
-  console.log('settings file:', settings.path);
-  console.log('settings', settings.get("github-workflow-status"));
 
   module.exports = {
     load: () => {
-      return settings.get("github-workflow-status");
+      return {
+        path: settings.path,
+        config: settings.get("github-workflow-status")
+      };
     }
   }
 }());

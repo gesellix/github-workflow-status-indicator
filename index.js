@@ -2,7 +2,7 @@
 
 const isMac = process.platform === 'darwin'
 const {ipcMain, Menu, nativeImage} = require('electron');
-const config = require('./config').load();
+const settings = require('./config').load();
 
 const iconPath = __dirname + "/assets/icons";
 const mb = require('menubar').menubar({
@@ -47,7 +47,7 @@ function updateStatusIndicator(status) {
 const ghWorkflowStatus = require('./src/github-workflow-status');
 
 function updateAlerts() {
-  ghWorkflowStatus.run(config, (result, error) => {
+  ghWorkflowStatus.run(settings, (result, error) => {
     if (error) {
       console.log('error', error);
       updateStatusIndicator('unknown-error');
@@ -59,13 +59,15 @@ function updateAlerts() {
     if (result) {
       console.log('result', result);
       updateStatusIndicator(result.status);
-      mb.window.webContents.send('update', result.status, result);
+      if (mb.window) {
+        mb.window.webContents.send('update', result.status, result);
+      }
     }
   });
 }
 
 ipcMain.on('renderer-mounted', (event, data) => {
-  event.sender.send('config', config)
+  event.sender.send('config', settings.config)
 })
 
 ipcMain.on('close-app', (event, data) => {
@@ -79,16 +81,16 @@ mb.on('ready', function ready() {
   ]))
 
   updateAlerts();
-  setInterval(updateAlerts, config.pollInterval);
+  setInterval(updateAlerts, settings.config.pollInterval);
 });
 
 mb.on('after-create-window', function () {
-  console.log('after-create-window');
+  // console.log('after-create-window');
   // mb.window.openDevTools();
   // console.log(mb.window.webContents);
 
   mb.app.on('web-contents-created', function (e, webContents) {
-    console.log('web-contents-created');
+    // console.log('web-contents-created');
     // webContents.openDevTools();
   });
 });
