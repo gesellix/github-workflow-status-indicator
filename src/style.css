@@ -1,0 +1,41 @@
+#alert-app {
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 13px;
+  padding-left: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: #f66;
+}
+
+li {
+  line-height: 1.5em;
+  margin-bottom: 20px;
+}
+
+.status {
+  display: inline-block;
+  /*margin: 4px;*/
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+
+.status:before {
+  position: absolute;
+  /*top: 50%;*/
+  /*left: 50%;*/
+}
+
+.status.success {
+  background-image: url("./icons/octicon-check-circle.png");
+}
+
+.status.failure {
+  background-image: url("./icons/octicon-x-circle.png");
+}

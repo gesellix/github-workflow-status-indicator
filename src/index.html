@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>GitHub Workflow Status Indicator</title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="style.css"/>
+    <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="../assets/vuejs/vue.min.js"></script>
+</head>
+
+<body>
+<h1>Workflows</h1>
+
+<div id="workflow-app">
+
+    <button id="close-btn" v-on:click="close"><i class="material-icons">close</i></button>
+
+    <!--    <div id="gh-link">-->
+    <!--        Results powered by: <a v-bind:href="config.baseUri" target="_blank" class="open-in-browser">{{config.baseUri}}</a>-->
+    <!--    </div>-->
+
+<!--    <div id="status-summary">-->
+<!--        status: {{ status }}-->
+<!--    </div>-->
+
+    <div id="technical-error">
+        {{ error }}
+    </div>
+
+    <div id="runs">
+        <ul>
+            <li v-for="repo in repos"><i class="status" v-bind:class="repo.conclusion"></i> {{ repo.repo.slug }} / {{ repo.name }}</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+<script>
+    const model = {
+        config: {
+            baseUri: ''
+        },
+        error: '',
+        status: 'unknown',
+        repos: []
+    };
+
+    require('./app')(model);
+    const {ipcRenderer} = require('electron');
+    const vue = new Vue({
+        el: '#workflow-app',
+        data: model,
+        methods: {
+            close: function (event) {
+                ipcRenderer.send('close-app');
+            }
+        },
+        mounted() {
+            ipcRenderer.send('renderer-mounted');
+        },
+        destroyed() {
+            ipcRenderer.removeAllListeners();
+        }
+    });
+
+</script>
+</html>

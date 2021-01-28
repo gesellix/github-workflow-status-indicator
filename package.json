@@ -1,0 +1,46 @@
+{
+  "name": "github-workflow-status-indicator",
+  "version": "0.0.1",
+  "description": "Show GitHub Workflow Status in Your System Tray",
+  "main": "index.js",
+  "scripts": {
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir",
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gesellix/github-workflow-status-indicator"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "workflow",
+    "status",
+    "indicator"
+  ],
+  "author": "Tobias Gesellchen <tobias@gesellix.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gesellix/github-workflow-status-indicator/issues"
+  },
+  "homepage": "https://github.com/gesellix/github-workflow-status-indicator",
+  "devDependencies": {
+    "electron": "^9.3.1",
+    "electron-builder": "^22.7.0"
+  },
+  "dependencies": {
+    "electron-store": "^5.2.0",
+    "lodash": "^4.17.19",
+    "menubar": "^9.0.1",
+    "q": "^1.4.1",
+    "request": "^2.88.2"
+  },
+  "build": {
+    "appId": "de.gesellix.github.workflow.indicator",
+    "mac": {
+      "category": "i.do.not.know"
+    }
+  }
+}
